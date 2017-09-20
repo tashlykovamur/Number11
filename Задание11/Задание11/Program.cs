@@ -36,11 +36,12 @@ namespace Задание11
 
             int check = 0;
 
-            while (check <1)
-            {     Console.WriteLine("Введите число");
-            string num = Console.ReadLine();
-             check = Check(num);
-            
+            while (check < 1)
+            {
+                Console.WriteLine("Введите число");
+                string num = Console.ReadLine();
+                check = Check(num);
+
                 if (check == 1)
                 {
                     int[] arr = new int[num.Length];
@@ -68,7 +69,7 @@ namespace Задание11
                     }
                     Console.WriteLine();
 
-                    
+
                 }
                 else if (check == -1)
                 {
@@ -107,11 +108,11 @@ namespace Задание11
                     {
                         if (arr[i] == 0)//если ноль, то отличаются с предыдущим
                             newArr[i] = newArr[i - 1] == 1 ? 0 : 1; //если пред = 0 то 1, а если 1 то 0
-                         //Convert.ToInt32((!Convert.ToBoolean(newArr[i - 1])));
+                                                                    
                         else
-                            newArr[i] = newArr[i - 1];//если эл-т 1, то повторяем пред
+                            newArr[i] = newArr[i - 1];//если эл-т = 1, то повторяем предыдущий
                     }
-                    //string newNum = string.Join("", newArr);
+                    
 
                     Console.WriteLine($"Расшифрованная последовательность:");
                     for (int i = 0; i < num.Length; i++)
@@ -131,13 +132,65 @@ namespace Задание11
 
             }
         }
+        static int InputInt(string msg, int left, int right)//ввод целого числа с проверкой границ и правильности ввода 
+        {
+            bool ok = false;
+            int number = -100;
+            do
+            {
+                Console.WriteLine(msg);
+                try
+                {
+                    number = Convert.ToInt32(Console.ReadLine());
+                    if (number >= left && number < right) ok = true;
+                    else
+                    {
+                        Console.WriteLine("Ошибка ввода");
+                        ok = false;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Ошибка ввода");
+                    ok = false;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Ошибка ввода");
+                    ok = false;
+                }
+            } while (!ok);
+            return number;
+        }
+
         static void Main(string[] args)
         {
-            Shifrovanie();
+            int ch = 0;
 
-            Deshifrovanie();
+            do
+            {
+                Console.WriteLine("Выберите действие, которое вы хотите выполнить:");
+                Console.WriteLine("1. Шифрование");
+                Console.WriteLine("2. Дешифрование");
+                Console.WriteLine("3. Выход");
 
-            Console.ReadLine();
+                ch = InputInt("", 1, 4); //3 пункта меню
+                switch (ch)
+                {
+                    case 1:
+                        {
+                            Shifrovanie();
+                            break;
+                        }
+                    case 2:
+                        {
+                            Deshifrovanie();
+                            break;
+                        }
+                }
+            } while (ch < 3);
+
         }
     }
 }
+
